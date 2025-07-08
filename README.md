@@ -26,3 +26,9 @@ gcc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c main.c -o gnl_te
 
 # Run the test executable
 ./gnl_test
+
+# Compile with bonus multi-FD support
+gcc -Wall -Wextra -Werror get_next_line_bonus.c get_next_line_utils_bonus.c main.c -o gnl_bonus
+
+# Run the bonus test executable
+./gnl_bonus
