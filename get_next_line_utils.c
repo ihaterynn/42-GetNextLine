@@ -49,6 +49,8 @@ char    *ft_strjoin(const char *s1, const char *s2)
     int     i;
     char    *res;
 
+    if (!s1 || !s2)
+        return (NULL);
     res = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
     i = 0;
     if (!res)
@@ -72,6 +74,8 @@ char	*ft_strchr(const char *s, int c)
 	char	cc;
 	int		i;
 
+	if (!s)
+		return (NULL);
 	cc = (char) c;
 	i = 0;
 	while (s[i] != '\0')
@@ -107,11 +111,13 @@ char    *ft_substr(char const *s, unsigned int start, size_t len)
     i = 0;
     if (!s)
         return (NULL);
-    if (start > ft_strlen(s))
+    if (start >= ft_strlen(s))
         return (ft_strdup(""));
     if (len > ft_strlen(s + start))
         len = ft_strlen(s + start);
     str = ft_calloc(len + 1, sizeof(char));
+    if (!str)
+        return (NULL);
     while (i < len && s[start + i] != '\0')
     {
         str[i] = s[start + i];
