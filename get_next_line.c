@@ -51,14 +51,13 @@ char    *read_line(int fd, char **stash)
     free(buffer);
     if (!*stash || **stash == '\0')
         return (NULL);
-    return (extract_line(*stash));
+    return (*stash);
 }
 
 char    *extract_line(char  *stash)
 {
     char    *line;
     size_t  count;
-    size_t  line_len;
 
     if (!stash)
         return (NULL);
@@ -67,17 +66,7 @@ char    *extract_line(char  *stash)
         count++;
     if (stash[count] == '\n')
         count++;
-    line_len = count;
-    if (count > 1 && stash[count - 1] == '\n')
-        line_len = count - 1;  
-    line = ft_substr(stash, 0, line_len);
-    if (!line)
-        return (NULL);
-    if (stash[count - 1] == '\n')
-    {
-        line[line_len - 1] = '\n';
-        line[line_len] = '\0';
-    }
+    line = ft_substr(stash, 0, count);
     return (line);
 }
 
@@ -112,16 +101,10 @@ char    *get_next_line(int fd)
 
     if (fd < 0 || BUFFER_SIZE <= 0)
         return (NULL);
-    line = read_line(fd, &stash);
-    if (!line)
-    {
-        if (stash)
-        {
-            free(stash);
-            stash = NULL;
-        }
+    stash = read_line(fd, &stash);
+    if (!stash)
         return (NULL);
-    }
+    line = extract_line(stash);
     stash = clear_buffer(stash);
     return (line);
 }
